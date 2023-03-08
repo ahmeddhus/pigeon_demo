@@ -7,6 +7,5 @@ class Movie {
 
 @HostApi()
 abstract class MoviesApi {
-  @async
   List<Movie?> getMovies(int pageNumber);
 }

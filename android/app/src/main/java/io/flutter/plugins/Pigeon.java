@@ -96,12 +96,6 @@ public class Pigeon {
     }
   }
 
-  public interface Result<T> {
-    void success(T result);
-
-    void error(Throwable error);
-  }
-
   private static class MoviesApiCodec extends StandardMessageCodec {
     public static final MoviesApiCodec INSTANCE = new MoviesApiCodec();
 
@@ -131,7 +125,8 @@ public class Pigeon {
   /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
   public interface MoviesApi {
 
-    void getMovies(@NonNull Long pageNumber, Result<List<Movie>> result);
+    @NonNull 
+    List<Movie> getMovies(@NonNull Long pageNumber);
 
     /** The codec used by MoviesApi. */
     static MessageCodec<Object> getCodec() {
@@ -154,24 +149,13 @@ public class Pigeon {
                   if (pageNumberArg == null) {
                     throw new NullPointerException("pageNumberArg unexpectedly null.");
                   }
-                  Result<List<Movie>> resultCallback =
-                      new Result<List<Movie>>() {
-                        public void success(List<Movie> result) {
-                          wrapped.add(0, result);
-                          reply.reply(wrapped);
-                        }
-
-                        public void error(Throwable error) {
-                          ArrayList<Object> wrappedError = wrapError(error);
-                          reply.reply(wrappedError);
-                        }
-                      };
-
-                  api.getMovies((pageNumberArg == null) ? null : pageNumberArg.longValue(), resultCallback);
+                  List<Movie> output = api.getMovies((pageNumberArg == null) ? null : pageNumberArg.longValue());
+                  wrapped.add(0, output);
                 } catch (Error | RuntimeException exception) {
                   ArrayList<Object> wrappedError = wrapError(exception);
-                  reply.reply(wrappedError);
+                  wrapped = wrappedError;
                 }
+                reply.reply(wrapped);
               });
         } else {
           channel.setMessageHandler(null);
