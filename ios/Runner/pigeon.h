@@ -23,7 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
 NSObject<FlutterMessageCodec> *MoviesApiGetCodec(void);
 
 @protocol MoviesApi
-- (void)getMoviesPageNumber:(NSNumber *)pageNumber completion:(void (^)(NSArray<Movie *> *_Nullable, FlutterError *_Nullable))completion;
+/// @return `nil` only when `error != nil`.
+- (nullable NSArray<Movie *> *)getMoviesPageNumber:(NSNumber *)pageNumber error:(FlutterError *_Nullable *_Nonnull)error;
 @end
 
 extern void MoviesApiSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<MoviesApi> *_Nullable api);

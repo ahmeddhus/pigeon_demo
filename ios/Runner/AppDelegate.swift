@@ -1,13 +1,33 @@
 import UIKit
 import Flutter
 
+class MyApi: NSObject, MoviesApi {
+    func getMovies(pageNumber: Int32) throws -> [Movie?] {
+        let result = Movie(title: "The Shawshank Redemption", date: "1994")
+        return [result]
+    }
+}
+
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
-  override func application(
-    _ application: UIApplication,
-    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
-  ) -> Bool {
-    GeneratedPluginRegistrant.register(with: self)
-    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
-  }
+    var flutterViewController : FlutterViewController!;
+    var navigationController : UINavigationController!;
+    
+    override func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    ) -> Bool {
+        flutterViewController = window?.rootViewController as? FlutterViewController
+        GeneratedPluginRegistrant.register(with: self)
+        navigationController = UINavigationController(rootViewController: flutterViewController)
+        navigationController.isNavigationBarHidden = true
+        window?.rootViewController = navigationController
+        window?.makeKeyAndVisible()
+        
+        let api = MyApi()
+        MoviesApiSetup.setUp(binaryMessenger: flutterViewController.binaryMessenger, api: api)
+        
+
+        return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+    }
 }

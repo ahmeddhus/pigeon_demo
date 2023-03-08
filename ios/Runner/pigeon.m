@@ -107,13 +107,13 @@ void MoviesApiSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<MoviesA
         binaryMessenger:binaryMessenger
         codec:MoviesApiGetCodec()];
     if (api) {
-      NSCAssert([api respondsToSelector:@selector(getMoviesPageNumber:completion:)], @"MoviesApi api (%@) doesn't respond to @selector(getMoviesPageNumber:completion:)", api);
+      NSCAssert([api respondsToSelector:@selector(getMoviesPageNumber:error:)], @"MoviesApi api (%@) doesn't respond to @selector(getMoviesPageNumber:error:)", api);
       [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
         NSArray *args = message;
         NSNumber *arg_pageNumber = GetNullableObjectAtIndex(args, 0);
-        [api getMoviesPageNumber:arg_pageNumber completion:^(NSArray<Movie *> *_Nullable output, FlutterError *_Nullable error) {
-          callback(wrapResult(output, error));
-        }];
+        FlutterError *error;
+        NSArray<Movie *> *output = [api getMoviesPageNumber:arg_pageNumber error:&error];
+        callback(wrapResult(output, error));
       }];
     } else {
       [channel setMessageHandler:nil];

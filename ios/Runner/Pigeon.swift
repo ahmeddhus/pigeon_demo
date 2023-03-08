@@ -52,7 +52,6 @@ struct Movie {
     ]
   }
 }
-
 private class MoviesApiCodecReader: FlutterStandardReader {
   override func readValue(ofType type: UInt8) -> Any? {
     switch type {
@@ -91,7 +90,7 @@ class MoviesApiCodec: FlutterStandardMessageCodec {
 
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol MoviesApi {
-  func getMovies(pageNumber: Int32, completion: @escaping (Result<[Movie?], Error>) -> Void)
+  func getMovies(pageNumber: Int32) throws -> [Movie?]
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -105,13 +104,11 @@ class MoviesApiSetup {
       getMoviesChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
         let pageNumberArg = args[0] as! Int32
-        api.getMovies(pageNumber: pageNumberArg) { result in
-          switch result {
-            case .success(let res):
-              reply(wrapResult(res))
-            case .failure(let error):
-              reply(wrapError(error))
-          }
+        do {
+          let result = try api.getMovies(pageNumber: pageNumberArg)
+          reply(wrapResult(result))
+        } catch {
+          reply(wrapError(error))
         }
       }
     } else {
