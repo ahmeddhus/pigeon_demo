@@ -6,7 +6,7 @@ class Movie {
 }
 
 @HostApi()
-abstract class BookApi {
+abstract class MoviesApi {
   @async
   List<Movie?> movies(int pageNumber);
 }

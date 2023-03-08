@@ -19,13 +19,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy, nullable) NSString * date;
 @end
 
-/// The codec used by BookApi.
-NSObject<FlutterMessageCodec> *BookApiGetCodec(void);
+/// The codec used by MoviesApi.
+NSObject<FlutterMessageCodec> *MoviesApiGetCodec(void);
 
-@protocol BookApi
+@protocol MoviesApi
 - (void)moviesPageNumber:(NSNumber *)pageNumber completion:(void (^)(NSArray<Movie *> *_Nullable, FlutterError *_Nullable))completion;
 @end
 
-extern void BookApiSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<BookApi> *_Nullable api);
+extern void MoviesApiSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<MoviesApi> *_Nullable api);
 
 NS_ASSUME_NONNULL_END

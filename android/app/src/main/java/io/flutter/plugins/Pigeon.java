@@ -102,10 +102,10 @@ public class Pigeon {
     void error(Throwable error);
   }
 
-  private static class BookApiCodec extends StandardMessageCodec {
-    public static final BookApiCodec INSTANCE = new BookApiCodec();
+  private static class MoviesApiCodec extends StandardMessageCodec {
+    public static final MoviesApiCodec INSTANCE = new MoviesApiCodec();
 
-    private BookApiCodec() {}
+    private MoviesApiCodec() {}
 
     @Override
     protected Object readValueOfType(byte type, @NonNull ByteBuffer buffer) {
@@ -129,20 +129,20 @@ public class Pigeon {
   }
 
   /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
-  public interface BookApi {
+  public interface MoviesApi {
 
     void movies(@NonNull Long pageNumber, Result<List<Movie>> result);
 
-    /** The codec used by BookApi. */
+    /** The codec used by MoviesApi. */
     static MessageCodec<Object> getCodec() {
-      return BookApiCodec.INSTANCE;
+      return MoviesApiCodec.INSTANCE;
     }
-    /**Sets up an instance of `BookApi` to handle messages through the `binaryMessenger`. */
-    static void setup(BinaryMessenger binaryMessenger, BookApi api) {
+    /**Sets up an instance of `MoviesApi` to handle messages through the `binaryMessenger`. */
+    static void setup(BinaryMessenger binaryMessenger, MoviesApi api) {
       {
         BasicMessageChannel<Object> channel =
             new BasicMessageChannel<>(
-                binaryMessenger, "dev.flutter.pigeon.BookApi.movies", getCodec());
+                binaryMessenger, "dev.flutter.pigeon.MoviesApi.movies", getCodec());
         if (api != null) {
           channel.setMessageHandler(
               (message, reply) -> {

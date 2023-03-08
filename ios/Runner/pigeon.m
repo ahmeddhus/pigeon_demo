@@ -52,9 +52,9 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
 }
 @end
 
-@interface BookApiCodecReader : FlutterStandardReader
+@interface MoviesApiCodecReader : FlutterStandardReader
 @end
-@implementation BookApiCodecReader
+@implementation MoviesApiCodecReader
 - (nullable id)readValueOfType:(UInt8)type {
   switch (type) {
     case 128: 
@@ -65,9 +65,9 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
 }
 @end
 
-@interface BookApiCodecWriter : FlutterStandardWriter
+@interface MoviesApiCodecWriter : FlutterStandardWriter
 @end
-@implementation BookApiCodecWriter
+@implementation MoviesApiCodecWriter
 - (void)writeValue:(id)value {
   if ([value isKindOfClass:[Movie class]]) {
     [self writeByte:128];
@@ -78,36 +78,36 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
 }
 @end
 
-@interface BookApiCodecReaderWriter : FlutterStandardReaderWriter
+@interface MoviesApiCodecReaderWriter : FlutterStandardReaderWriter
 @end
-@implementation BookApiCodecReaderWriter
+@implementation MoviesApiCodecReaderWriter
 - (FlutterStandardWriter *)writerWithData:(NSMutableData *)data {
-  return [[BookApiCodecWriter alloc] initWithData:data];
+  return [[MoviesApiCodecWriter alloc] initWithData:data];
 }
 - (FlutterStandardReader *)readerWithData:(NSData *)data {
-  return [[BookApiCodecReader alloc] initWithData:data];
+  return [[MoviesApiCodecReader alloc] initWithData:data];
 }
 @end
 
-NSObject<FlutterMessageCodec> *BookApiGetCodec() {
+NSObject<FlutterMessageCodec> *MoviesApiGetCodec() {
   static FlutterStandardMessageCodec *sSharedObject = nil;
   static dispatch_once_t sPred = 0;
   dispatch_once(&sPred, ^{
-    BookApiCodecReaderWriter *readerWriter = [[BookApiCodecReaderWriter alloc] init];
+    MoviesApiCodecReaderWriter *readerWriter = [[MoviesApiCodecReaderWriter alloc] init];
     sSharedObject = [FlutterStandardMessageCodec codecWithReaderWriter:readerWriter];
   });
   return sSharedObject;
 }
 
-void BookApiSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<BookApi> *api) {
+void MoviesApiSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<MoviesApi> *api) {
   {
     FlutterBasicMessageChannel *channel =
       [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.BookApi.movies"
+        initWithName:@"dev.flutter.pigeon.MoviesApi.movies"
         binaryMessenger:binaryMessenger
-        codec:BookApiGetCodec()];
+        codec:MoviesApiGetCodec()];
     if (api) {
-      NSCAssert([api respondsToSelector:@selector(moviesPageNumber:completion:)], @"BookApi api (%@) doesn't respond to @selector(moviesPageNumber:completion:)", api);
+      NSCAssert([api respondsToSelector:@selector(moviesPageNumber:completion:)], @"MoviesApi api (%@) doesn't respond to @selector(moviesPageNumber:completion:)", api);
       [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
         NSArray *args = message;
         NSNumber *arg_pageNumber = GetNullableObjectAtIndex(args, 0);
