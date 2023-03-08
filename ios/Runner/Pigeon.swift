@@ -91,7 +91,7 @@ class MoviesApiCodec: FlutterStandardMessageCodec {
 
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol MoviesApi {
-  func movies(pageNumber: Int32, completion: @escaping (Result<[Movie?], Error>) -> Void)
+  func getMovies(pageNumber: Int32, completion: @escaping (Result<[Movie?], Error>) -> Void)
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -100,12 +100,12 @@ class MoviesApiSetup {
   static var codec: FlutterStandardMessageCodec { MoviesApiCodec.shared }
   /// Sets up an instance of `MoviesApi` to handle messages through the `binaryMessenger`.
   static func setUp(binaryMessenger: FlutterBinaryMessenger, api: MoviesApi?) {
-    let moviesChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.MoviesApi.movies", binaryMessenger: binaryMessenger, codec: codec)
+    let getMoviesChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.MoviesApi.getMovies", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
-      moviesChannel.setMessageHandler { message, reply in
+      getMoviesChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
         let pageNumberArg = args[0] as! Int32
-        api.movies(pageNumber: pageNumberArg) { result in
+        api.getMovies(pageNumber: pageNumberArg) { result in
           switch result {
             case .success(let res):
               reply(wrapResult(res))
@@ -115,7 +115,7 @@ class MoviesApiSetup {
         }
       }
     } else {
-      moviesChannel.setMessageHandler(nil)
+      getMoviesChannel.setMessageHandler(nil)
     }
   }
 }

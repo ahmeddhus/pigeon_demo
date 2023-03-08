@@ -131,7 +131,7 @@ public class Pigeon {
   /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
   public interface MoviesApi {
 
-    void movies(@NonNull Long pageNumber, Result<List<Movie>> result);
+    void getMovies(@NonNull Long pageNumber, Result<List<Movie>> result);
 
     /** The codec used by MoviesApi. */
     static MessageCodec<Object> getCodec() {
@@ -142,7 +142,7 @@ public class Pigeon {
       {
         BasicMessageChannel<Object> channel =
             new BasicMessageChannel<>(
-                binaryMessenger, "dev.flutter.pigeon.MoviesApi.movies", getCodec());
+                binaryMessenger, "dev.flutter.pigeon.MoviesApi.getMovies", getCodec());
         if (api != null) {
           channel.setMessageHandler(
               (message, reply) -> {
@@ -167,7 +167,7 @@ public class Pigeon {
                         }
                       };
 
-                  api.movies((pageNumberArg == null) ? null : pageNumberArg.longValue(), resultCallback);
+                  api.getMovies((pageNumberArg == null) ? null : pageNumberArg.longValue(), resultCallback);
                 } catch (Error | RuntimeException exception) {
                   ArrayList<Object> wrappedError = wrapError(exception);
                   reply.reply(wrappedError);

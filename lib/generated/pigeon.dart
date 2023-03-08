@@ -67,9 +67,9 @@ class MoviesApi {
 
   static const MessageCodec<Object?> codec = _MoviesApiCodec();
 
-  Future<List<Movie?>> movies(int arg_pageNumber) async {
+  Future<List<Movie?>> getMovies(int arg_pageNumber) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.MoviesApi.movies', codec,
+        'dev.flutter.pigeon.MoviesApi.getMovies', codec,
         binaryMessenger: _binaryMessenger);
     final List<Object?>? replyList =
         await channel.send(<Object?>[arg_pageNumber]) as List<Object?>?;
