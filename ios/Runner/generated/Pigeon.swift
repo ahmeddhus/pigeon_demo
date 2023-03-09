@@ -31,84 +31,28 @@ private func wrapError(_ error: Any) -> [Any?] {
   ]
 }
 
-/// Generated class from Pigeon that represents data sent in messages.
-struct Movie {
-  var title: String? = nil
-  var date: String? = nil
-
-  static func fromList(_ list: [Any]) -> Movie? {
-    let title = list[0] as! String? 
-    let date = list[1] as! String? 
-
-    return Movie(
-      title: title,
-      date: date
-    )
-  }
-  func toList() -> [Any?] {
-    return [
-      title,
-      date,
-    ]
-  }
-}
-private class MoviesHostApiCodecReader: FlutterStandardReader {
-  override func readValue(ofType type: UInt8) -> Any? {
-    switch type {
-      case 128:
-        return Movie.fromList(self.readValue() as! [Any])
-      default:
-        return super.readValue(ofType: type)
-    }
-  }
-}
-
-private class MoviesHostApiCodecWriter: FlutterStandardWriter {
-  override func writeValue(_ value: Any) {
-    if let value = value as? Movie {
-      super.writeByte(128)
-      super.writeValue(value.toList())
-    } else {
-      super.writeValue(value)
-    }
-  }
-}
-
-private class MoviesHostApiCodecReaderWriter: FlutterStandardReaderWriter {
-  override func reader(with data: Data) -> FlutterStandardReader {
-    return MoviesHostApiCodecReader(data: data)
-  }
-
-  override func writer(with data: NSMutableData) -> FlutterStandardWriter {
-    return MoviesHostApiCodecWriter(data: data)
-  }
-}
-
-class MoviesHostApiCodec: FlutterStandardMessageCodec {
-  static let shared = MoviesHostApiCodec(readerWriter: MoviesHostApiCodecReaderWriter())
-}
-
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol MoviesHostApi {
-  func getMovies(pageNumber: Int32) throws -> [Movie?]
+  func getMovies(apiKey: String, completion: @escaping (Result<Any?, Error>) -> Void)
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
 class MoviesHostApiSetup {
   /// The codec used by MoviesHostApi.
-  static var codec: FlutterStandardMessageCodec { MoviesHostApiCodec.shared }
   /// Sets up an instance of `MoviesHostApi` to handle messages through the `binaryMessenger`.
   static func setUp(binaryMessenger: FlutterBinaryMessenger, api: MoviesHostApi?) {
-    let getMoviesChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.MoviesHostApi.getMovies", binaryMessenger: binaryMessenger, codec: codec)
+    let getMoviesChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.MoviesHostApi.getMovies", binaryMessenger: binaryMessenger)
     if let api = api {
       getMoviesChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
-        let pageNumberArg = args[0] as! Int32
-        do {
-          let result = try api.getMovies(pageNumber: pageNumberArg)
-          reply(wrapResult(result))
-        } catch {
-          reply(wrapError(error))
+        let apiKeyArg = args[0] as! String
+        api.getMovies(apiKey: apiKeyArg) { result in
+          switch result {
+            case .success(let res):
+              reply(wrapResult(res))
+            case .failure(let error):
+              reply(wrapError(error))
+          }
         }
       }
     } else {
