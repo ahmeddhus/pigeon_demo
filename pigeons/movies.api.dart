@@ -1,11 +1,11 @@
+// Generate the Pigeon code for Dart, Android and iOS.
+// This will create the `MoviesHostApi` class in Android and iOS.
+// You can run this code with the generate_pigeon.sh script.
+// See https://pub.dev/packages/pigeon for more information.
 import 'package:pigeon/pigeon.dart';
-
-class Movie {
-  String? title;
-  String? date;
-}
 
 @HostApi()
 abstract class MoviesHostApi {
-  List<Movie?> getMovies(int pageNumber);
+  @async
+  Object? getMovies(String apiKey);
 }
