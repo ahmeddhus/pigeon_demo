@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> getMovies() async {
-    final List<Movie?> movies = await MoviesApi().getMovies(1);
+    final List<Movie?> movies = await MoviesHostApi().getMovies(1);
     final newBooks = List<Movie>.from(movies);
 
     setState(() => this.movies..addAll(newBooks));

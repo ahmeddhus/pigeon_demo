@@ -52,7 +52,7 @@ struct Movie {
     ]
   }
 }
-private class MoviesApiCodecReader: FlutterStandardReader {
+private class MoviesHostApiCodecReader: FlutterStandardReader {
   override func readValue(ofType type: UInt8) -> Any? {
     switch type {
       case 128:
@@ -63,7 +63,7 @@ private class MoviesApiCodecReader: FlutterStandardReader {
   }
 }
 
-private class MoviesApiCodecWriter: FlutterStandardWriter {
+private class MoviesHostApiCodecWriter: FlutterStandardWriter {
   override func writeValue(_ value: Any) {
     if let value = value as? Movie {
       super.writeByte(128)
@@ -74,32 +74,32 @@ private class MoviesApiCodecWriter: FlutterStandardWriter {
   }
 }
 
-private class MoviesApiCodecReaderWriter: FlutterStandardReaderWriter {
+private class MoviesHostApiCodecReaderWriter: FlutterStandardReaderWriter {
   override func reader(with data: Data) -> FlutterStandardReader {
-    return MoviesApiCodecReader(data: data)
+    return MoviesHostApiCodecReader(data: data)
   }
 
   override func writer(with data: NSMutableData) -> FlutterStandardWriter {
-    return MoviesApiCodecWriter(data: data)
+    return MoviesHostApiCodecWriter(data: data)
   }
 }
 
-class MoviesApiCodec: FlutterStandardMessageCodec {
-  static let shared = MoviesApiCodec(readerWriter: MoviesApiCodecReaderWriter())
+class MoviesHostApiCodec: FlutterStandardMessageCodec {
+  static let shared = MoviesHostApiCodec(readerWriter: MoviesHostApiCodecReaderWriter())
 }
 
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
-protocol MoviesApi {
+protocol MoviesHostApi {
   func getMovies(pageNumber: Int32) throws -> [Movie?]
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
-class MoviesApiSetup {
-  /// The codec used by MoviesApi.
-  static var codec: FlutterStandardMessageCodec { MoviesApiCodec.shared }
-  /// Sets up an instance of `MoviesApi` to handle messages through the `binaryMessenger`.
-  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: MoviesApi?) {
-    let getMoviesChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.MoviesApi.getMovies", binaryMessenger: binaryMessenger, codec: codec)
+class MoviesHostApiSetup {
+  /// The codec used by MoviesHostApi.
+  static var codec: FlutterStandardMessageCodec { MoviesHostApiCodec.shared }
+  /// Sets up an instance of `MoviesHostApi` to handle messages through the `binaryMessenger`.
+  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: MoviesHostApi?) {
+    let getMoviesChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.MoviesHostApi.getMovies", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
       getMoviesChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]

@@ -34,8 +34,8 @@ class Movie {
   }
 }
 
-class _MoviesApiCodec extends StandardMessageCodec {
-  const _MoviesApiCodec();
+class _MoviesHostApiCodec extends StandardMessageCodec {
+  const _MoviesHostApiCodec();
   @override
   void writeValue(WriteBuffer buffer, Object? value) {
     if (value is Movie) {
@@ -57,19 +57,19 @@ class _MoviesApiCodec extends StandardMessageCodec {
   }
 }
 
-class MoviesApi {
-  /// Constructor for [MoviesApi].  The [binaryMessenger] named argument is
+class MoviesHostApi {
+  /// Constructor for [MoviesHostApi].  The [binaryMessenger] named argument is
   /// available for dependency injection.  If it is left null, the default
   /// BinaryMessenger will be used which routes to the host platform.
-  MoviesApi({BinaryMessenger? binaryMessenger})
+  MoviesHostApi({BinaryMessenger? binaryMessenger})
       : _binaryMessenger = binaryMessenger;
   final BinaryMessenger? _binaryMessenger;
 
-  static const MessageCodec<Object?> codec = _MoviesApiCodec();
+  static const MessageCodec<Object?> codec = _MoviesHostApiCodec();
 
   Future<List<Movie?>> getMovies(int arg_pageNumber) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.MoviesApi.getMovies', codec,
+        'dev.flutter.pigeon.MoviesHostApi.getMovies', codec,
         binaryMessenger: _binaryMessenger);
     final List<Object?>? replyList =
         await channel.send(<Object?>[arg_pageNumber]) as List<Object?>?;
