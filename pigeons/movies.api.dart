@@ -6,6 +6,6 @@ class Movie {
 }
 
 @HostApi()
-abstract class MoviesApi {
+abstract class MoviesHostApi {
   List<Movie?> getMovies(int pageNumber);
 }

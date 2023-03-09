@@ -96,10 +96,10 @@ public class Pigeon {
     }
   }
 
-  private static class MoviesApiCodec extends StandardMessageCodec {
-    public static final MoviesApiCodec INSTANCE = new MoviesApiCodec();
+  private static class MoviesHostApiCodec extends StandardMessageCodec {
+    public static final MoviesHostApiCodec INSTANCE = new MoviesHostApiCodec();
 
-    private MoviesApiCodec() {}
+    private MoviesHostApiCodec() {}
 
     @Override
     protected Object readValueOfType(byte type, @NonNull ByteBuffer buffer) {
@@ -123,21 +123,21 @@ public class Pigeon {
   }
 
   /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
-  public interface MoviesApi {
+  public interface MoviesHostApi {
 
     @NonNull 
     List<Movie> getMovies(@NonNull Long pageNumber);
 
-    /** The codec used by MoviesApi. */
+    /** The codec used by MoviesHostApi. */
     static MessageCodec<Object> getCodec() {
-      return MoviesApiCodec.INSTANCE;
+      return MoviesHostApiCodec.INSTANCE;
     }
-    /**Sets up an instance of `MoviesApi` to handle messages through the `binaryMessenger`. */
-    static void setup(BinaryMessenger binaryMessenger, MoviesApi api) {
+    /**Sets up an instance of `MoviesHostApi` to handle messages through the `binaryMessenger`. */
+    static void setup(BinaryMessenger binaryMessenger, MoviesHostApi api) {
       {
         BasicMessageChannel<Object> channel =
             new BasicMessageChannel<>(
-                binaryMessenger, "dev.flutter.pigeon.MoviesApi.getMovies", getCodec());
+                binaryMessenger, "dev.flutter.pigeon.MoviesHostApi.getMovies", getCodec());
         if (api != null) {
           channel.setMessageHandler(
               (message, reply) -> {

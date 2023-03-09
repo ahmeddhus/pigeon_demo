@@ -1,7 +1,7 @@
 import UIKit
 import Flutter
 
-class MyApi: NSObject, MoviesApi {
+class MyApi: NSObject, MoviesHostApi {
     func getMovies(pageNumber: Int32) throws -> [Movie?] {
         let result = Movie(title: "The Shawshank Redemption", date: "1994")
         return [result]
@@ -25,7 +25,7 @@ class MyApi: NSObject, MoviesApi {
         window?.makeKeyAndVisible()
         
         let api = MyApi()
-        MoviesApiSetup.setUp(binaryMessenger: flutterViewController.binaryMessenger, api: api)
+        MoviesHostApiSetup.setUp(binaryMessenger: flutterViewController.binaryMessenger, api: api)
         
 
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
