@@ -33,7 +33,7 @@ private func wrapError(_ error: Any) -> [Any?] {
 
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol MoviesHostApi {
-  func getMovies(urlString: String, completion: @escaping (Result<Any?, Error>) -> Void)
+  func getMovies(urlString: String, completion: @escaping (Result<String?, Error>) -> Void)
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.

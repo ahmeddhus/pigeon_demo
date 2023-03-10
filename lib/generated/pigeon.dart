@@ -18,7 +18,7 @@ class MoviesHostApi {
 
   static const MessageCodec<Object?> codec = StandardMessageCodec();
 
-  Future<Object?> getMovies(String arg_urlString) async {
+  Future<String?> getMovies(String arg_urlString) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
         'dev.flutter.pigeon.MoviesHostApi.getMovies', codec,
         binaryMessenger: _binaryMessenger);
@@ -36,7 +36,7 @@ class MoviesHostApi {
         details: replyList[2],
       );
     } else {
-      return replyList[0];
+      return (replyList[0] as String?);
     }
   }
 }
