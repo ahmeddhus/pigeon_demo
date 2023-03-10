@@ -45,5 +45,6 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> getMovies() async {
     dynamic response = await MoviesHostApi().getMovies('49c7e595e32c8886ddb7e18304fc1eb0');
+    print('response: $response');
   }
 }
