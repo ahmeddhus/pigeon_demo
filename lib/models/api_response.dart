@@ -1,8 +1,11 @@
-
 // This is a generic model class for the API response.
 // It is used to parse the JSON response from the API.
-class ApiResponse {
+import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:instabug_flutter_task/utils/from_map.dart';
+
+class ApiResponse {
   // Page number of the current response.
   final int? page;
 
@@ -22,13 +25,34 @@ class ApiResponse {
     this.results,
   });
 
-  // This method is used to parse the JSON response from the API.
-  factory ApiResponse.fromJson(Map<String, dynamic> json) {
+  // This method is used to parse the Map response from the API.
+  //And convert it to ApiResponse object
+  factory ApiResponse.fromMap(Map<String, dynamic> json) {
+    // Create a FromMap object to convert the JSON response to the Movie object.
+    final FromMap converter = FromMap(map: json);
+
     return ApiResponse(
-      page: int.tryParse(json['page']),
-      totalPages: int.tryParse(json['total_pages']),
-      totalResults: int.tryParse(json['total_results']),
-      results: json['results'],
+      page: converter.convertToInt(key: "page"),
+      totalPages: converter.convertToInt(key: "total_pages"),
+      totalResults: converter.convertToInt(key: "total_results"),
+      results: converter.convertToList(key: "results"),
     );
+  }
+
+  //Convert from json string to ApiResponse object
+  factory ApiResponse.fromJsonString(String jsonString) {
+    // Try to parse the JSON string.
+    try {
+      // Convert the JSON string to a Map.
+      final Map<String, dynamic> jsonMap = json.decode(jsonString);
+      // Return an ApiResponse object.
+      return ApiResponse.fromMap(jsonMap);
+    } catch (e) {
+      // If there is an error, print it to the console.
+      debugPrint('ApiResponse.fromJsonString: Error parsing JSON: $e');
+
+      // Return an empty ApiResponse object.
+      return ApiResponse();
+    }
   }
 }

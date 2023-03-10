@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:instabug_flutter_task/generated/pigeon.dart';
+import 'package:instabug_flutter_task/models/api_response.dart';
 import 'package:instabug_flutter_task/models/movie.dart';
 import 'package:instabug_flutter_task/utils/api_links.dart';
 
@@ -46,7 +47,18 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> getMovies() async {
+    List<Movie> movies = [];
+
     dynamic response = await MoviesHostApi().getMovies('$moviesApiUrl$apiKey');
-    if (kDebugMode) debugPrint('response: $response');
+    if (response is String) {
+      ApiResponse apiResponse = ApiResponse.fromJsonString(response);
+
+      if (apiResponse.results is List<Map>) {
+        movies = (apiResponse.results as List).map((itemWord) => Movie.fromMap(itemWord)).toList();
+      }
+    }
+    setState(() {
+      this.movies = movies;
+    });
   }
 }
