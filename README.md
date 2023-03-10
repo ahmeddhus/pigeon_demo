@@ -12,6 +12,7 @@ A new Flutter project that fetch movies list from native side and beck with the 
 - [ ] Check if code is well documented.
 - [ ] Error handling.
 - [ ] Unit test.
+- [ ] Look for any enhancement.
 
 
 ## Getting Started
