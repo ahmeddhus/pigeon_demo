@@ -3,7 +3,7 @@ import Flutter
 
 class MyApi: NSObject, MoviesHostApi {
     func getMovies(urlString: String, completion: @escaping (Result<Any?, Error>) -> Void) {
-        return MoviesApi.getMovieData(stringUrl: urlString, completion: completion);
+        return MoviesApi.getMovieData(urlString: urlString, completion: completion);
     }
 }
 
