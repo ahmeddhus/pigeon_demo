@@ -92,4 +92,22 @@ class FromMap {
     final DateTime? dateTime = DateTime.tryParse(result ?? '') ?? defaultValue;
     return dateTime;
   }
+
+  //Convert the value of the given key to List<Map<String, dynamic>>
+  List<Map<String, dynamic>> convertToList({required String key}) {
+    dynamic dynamicData = map[key];
+
+    //Check if the value is a List
+    if (dynamicData is List) {
+      List<Map<String, dynamic>> listOfMaps = [];
+
+      //Convert the List to List<Map<String, dynamic>>
+      //and return it
+      dynamicData.map((itemWord) => listOfMaps.add(itemWord)).toList();
+      return listOfMaps;
+    }
+
+    //If the value is not a List, the same value is returned
+    return dynamicData;
+  }
 }

@@ -28,9 +28,9 @@ class Movie {
     this.voteAverage,
   });
 
-  // This method is used to parse the JSON response from the API.
+  // This method is used to parse the Map response from the API.
+  //And convert it to Movie object
   factory Movie.fromMap(Map<String, dynamic> json) {
-
     // Create a FromMap object to convert the JSON response to the Movie object.
     final FromMap converter = FromMap(map: json);
 

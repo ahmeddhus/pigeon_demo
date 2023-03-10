@@ -47,10 +47,18 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> getMovies() async {
+    List<Movie> movies = [];
+
     dynamic response = await MoviesHostApi().getMovies('$moviesApiUrl$apiKey');
     if (response is String) {
-      response = ApiResponse.fromJsonString(response);
+      ApiResponse apiResponse = ApiResponse.fromJsonString(response);
+
+      if (apiResponse.results is List<Map>) {
+        movies = (apiResponse.results as List).map((itemWord) => Movie.fromMap(itemWord)).toList();
+      }
     }
-    if (kDebugMode) debugPrint('response: $response');
+    setState(() {
+      this.movies = movies;
+    });
   }
 }

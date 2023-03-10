@@ -25,7 +25,8 @@ class ApiResponse {
     this.results,
   });
 
-  // This method is used to parse the JSON response from the API.
+  // This method is used to parse the Map response from the API.
+  //And convert it to ApiResponse object
   factory ApiResponse.fromMap(Map<String, dynamic> json) {
     // Create a FromMap object to convert the JSON response to the Movie object.
     final FromMap converter = FromMap(map: json);
@@ -34,7 +35,7 @@ class ApiResponse {
       page: converter.convertToInt(key: "page"),
       totalPages: converter.convertToInt(key: "total_pages"),
       totalResults: converter.convertToInt(key: "total_results"),
-      results: json['results'],
+      results: converter.convertToList(key: "results"),
     );
   }
 
