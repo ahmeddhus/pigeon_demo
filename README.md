@@ -10,6 +10,8 @@ A new Flutter project that fetch movies list from native side and beck with the 
 - [x] Network on iOS native side.
 - [ ] Network on Android native side.
 - [ ] Check if code is well documented.
+- [ ] Conver json to Model objects.
+- [ ] Show data to user.
 - [ ] Error handling.
 - [ ] Unit test.
 - [ ] Look for any enhancement.
