@@ -29,7 +29,7 @@ class Movie {
   });
 
   // This method is used to parse the JSON response from the API.
-  factory Movie.fromJson(Map<String, dynamic> json) {
+  factory Movie.fromMap(Map<String, dynamic> json) {
 
     // Create a FromMap object to convert the JSON response to the Movie object.
     final FromMap converter = FromMap(map: json);
@@ -52,7 +52,7 @@ class Movie {
       final Map<String, dynamic> jsonMap = json.decode(jsonString);
 
       // Return an ApiResponse object.
-      return Movie.fromJson(jsonMap);
+      return Movie.fromMap(jsonMap);
     } catch (e) {
       // If there is an error, print it to the console.
       debugPrint('ApiResponse.fromJsonString: Error parsing JSON: $e');
