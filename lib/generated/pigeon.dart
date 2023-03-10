@@ -8,55 +8,6 @@ import 'dart:typed_data' show Float64List, Int32List, Int64List, Uint8List;
 import 'package:flutter/foundation.dart' show ReadBuffer, WriteBuffer;
 import 'package:flutter/services.dart';
 
-class Movie {
-  Movie({
-    this.title,
-    this.date,
-  });
-
-  String? title;
-
-  String? date;
-
-  Object encode() {
-    return <Object?>[
-      title,
-      date,
-    ];
-  }
-
-  static Movie decode(Object result) {
-    result as List<Object?>;
-    return Movie(
-      title: result[0] as String?,
-      date: result[1] as String?,
-    );
-  }
-}
-
-class _MoviesHostApiCodec extends StandardMessageCodec {
-  const _MoviesHostApiCodec();
-  @override
-  void writeValue(WriteBuffer buffer, Object? value) {
-    if (value is Movie) {
-      buffer.putUint8(128);
-      writeValue(buffer, value.encode());
-    } else {
-      super.writeValue(buffer, value);
-    }
-  }
-
-  @override
-  Object? readValueOfType(int type, ReadBuffer buffer) {
-    switch (type) {
-      case 128: 
-        return Movie.decode(readValue(buffer)!);
-      default:
-        return super.readValueOfType(type, buffer);
-    }
-  }
-}
-
 class MoviesHostApi {
   /// Constructor for [MoviesHostApi].  The [binaryMessenger] named argument is
   /// available for dependency injection.  If it is left null, the default
@@ -65,14 +16,14 @@ class MoviesHostApi {
       : _binaryMessenger = binaryMessenger;
   final BinaryMessenger? _binaryMessenger;
 
-  static const MessageCodec<Object?> codec = _MoviesHostApiCodec();
+  static const MessageCodec<Object?> codec = StandardMessageCodec();
 
-  Future<List<Movie?>> getMovies(int arg_pageNumber) async {
+  Future<String?> getMovies(String arg_urlString) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
         'dev.flutter.pigeon.MoviesHostApi.getMovies', codec,
         binaryMessenger: _binaryMessenger);
     final List<Object?>? replyList =
-        await channel.send(<Object?>[arg_pageNumber]) as List<Object?>?;
+        await channel.send(<Object?>[arg_urlString]) as List<Object?>?;
     if (replyList == null) {
       throw PlatformException(
         code: 'channel-error',
@@ -84,13 +35,8 @@ class MoviesHostApi {
         message: replyList[1] as String?,
         details: replyList[2],
       );
-    } else if (replyList[0] == null) {
-      throw PlatformException(
-        code: 'null-error',
-        message: 'Host platform returned null value for non-null return value.',
-      );
     } else {
-      return (replyList[0] as List<Object?>?)!.cast<Movie?>();
+      return (replyList[0] as String?);
     }
   }
 }

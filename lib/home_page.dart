@@ -1,5 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:instabug_flutter_task/generated/pigeon.dart';
+import 'package:instabug_flutter_task/models/movie.dart';
+import 'package:instabug_flutter_task/utils/api_links.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -28,7 +31,7 @@ class _HomePageState extends State<HomePage> {
                 final Movie movie = movies[index];
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('${movie.title} at "${movie.date}"'),
+                  child: Text(movie.title ?? ''),
                 );
               },
             ),
@@ -43,9 +46,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> getMovies() async {
-    final List<Movie?> movies = await MoviesHostApi().getMovies(1);
-    final newBooks = List<Movie>.from(movies);
-
-    setState(() => this.movies..addAll(newBooks));
+    dynamic response = await MoviesHostApi().getMovies('$moviesApiUrl$apiKey');
+    if (kDebugMode) debugPrint('response: $response');
   }
 }

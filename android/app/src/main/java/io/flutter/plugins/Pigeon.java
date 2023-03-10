@@ -32,105 +32,19 @@ public class Pigeon {
     return errorList;
   }
 
-  /** Generated class from Pigeon that represents data sent in messages. */
-  public static final class Movie {
-    private @Nullable String title;
+  public interface Result<T> {
+    void success(T result);
 
-    public @Nullable String getTitle() {
-      return title;
-    }
-
-    public void setTitle(@Nullable String setterArg) {
-      this.title = setterArg;
-    }
-
-    private @Nullable String date;
-
-    public @Nullable String getDate() {
-      return date;
-    }
-
-    public void setDate(@Nullable String setterArg) {
-      this.date = setterArg;
-    }
-
-    public static final class Builder {
-
-      private @Nullable String title;
-
-      public @NonNull Builder setTitle(@Nullable String setterArg) {
-        this.title = setterArg;
-        return this;
-      }
-
-      private @Nullable String date;
-
-      public @NonNull Builder setDate(@Nullable String setterArg) {
-        this.date = setterArg;
-        return this;
-      }
-
-      public @NonNull Movie build() {
-        Movie pigeonReturn = new Movie();
-        pigeonReturn.setTitle(title);
-        pigeonReturn.setDate(date);
-        return pigeonReturn;
-      }
-    }
-
-    @NonNull
-    ArrayList<Object> toList() {
-      ArrayList<Object> toListResult = new ArrayList<Object>(2);
-      toListResult.add(title);
-      toListResult.add(date);
-      return toListResult;
-    }
-
-    static @NonNull Movie fromList(@NonNull ArrayList<Object> list) {
-      Movie pigeonResult = new Movie();
-      Object title = list.get(0);
-      pigeonResult.setTitle((String) title);
-      Object date = list.get(1);
-      pigeonResult.setDate((String) date);
-      return pigeonResult;
-    }
+    void error(Throwable error);
   }
-
-  private static class MoviesHostApiCodec extends StandardMessageCodec {
-    public static final MoviesHostApiCodec INSTANCE = new MoviesHostApiCodec();
-
-    private MoviesHostApiCodec() {}
-
-    @Override
-    protected Object readValueOfType(byte type, @NonNull ByteBuffer buffer) {
-      switch (type) {
-        case (byte) 128:
-          return Movie.fromList((ArrayList<Object>) readValue(buffer));
-        default:
-          return super.readValueOfType(type, buffer);
-      }
-    }
-
-    @Override
-    protected void writeValue(@NonNull ByteArrayOutputStream stream, Object value) {
-      if (value instanceof Movie) {
-        stream.write(128);
-        writeValue(stream, ((Movie) value).toList());
-      } else {
-        super.writeValue(stream, value);
-      }
-    }
-  }
-
   /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
   public interface MoviesHostApi {
 
-    @NonNull 
-    List<Movie> getMovies(@NonNull Long pageNumber);
+    void getMovies(@NonNull String urlString, Result<String> result);
 
     /** The codec used by MoviesHostApi. */
     static MessageCodec<Object> getCodec() {
-      return MoviesHostApiCodec.INSTANCE;
+      return new StandardMessageCodec();
     }
     /**Sets up an instance of `MoviesHostApi` to handle messages through the `binaryMessenger`. */
     static void setup(BinaryMessenger binaryMessenger, MoviesHostApi api) {
@@ -145,17 +59,28 @@ public class Pigeon {
                 try {
                   ArrayList<Object> args = (ArrayList<Object>) message;
                   assert args != null;
-                  Number pageNumberArg = (Number) args.get(0);
-                  if (pageNumberArg == null) {
-                    throw new NullPointerException("pageNumberArg unexpectedly null.");
+                  String urlStringArg = (String) args.get(0);
+                  if (urlStringArg == null) {
+                    throw new NullPointerException("urlStringArg unexpectedly null.");
                   }
-                  List<Movie> output = api.getMovies((pageNumberArg == null) ? null : pageNumberArg.longValue());
-                  wrapped.add(0, output);
+                  Result<String> resultCallback =
+                      new Result<String>() {
+                        public void success(String result) {
+                          wrapped.add(0, result);
+                          reply.reply(wrapped);
+                        }
+
+                        public void error(Throwable error) {
+                          ArrayList<Object> wrappedError = wrapError(error);
+                          reply.reply(wrappedError);
+                        }
+                      };
+
+                  api.getMovies(urlStringArg, resultCallback);
                 } catch (Error | RuntimeException exception) {
                   ArrayList<Object> wrappedError = wrapError(exception);
-                  wrapped = wrappedError;
+                  reply.reply(wrappedError);
                 }
-                reply.reply(wrapped);
               });
         } else {
           channel.setMessageHandler(null);
