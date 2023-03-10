@@ -2,6 +2,18 @@
 
 A new Flutter project that fetch movies list from native side and beck with the results to flutter side
 
+
+## TODO list
+
+- [x] Set-up pigeon.
+- [x] Set-up API models.
+- [x] Network on iOS native side.
+- [ ] Network on Android native side.
+- [ ] Check if code is well documented.
+- [ ] Error handling.
+- [ ] Unit test.
+
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
