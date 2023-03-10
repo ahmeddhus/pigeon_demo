@@ -1,6 +1,8 @@
 
 // This is a generic model class for the API response.
 // It is used to parse the JSON response from the API.
+import 'dart:convert';
+
 class ApiResponse {
 
   // Page number of the current response.
@@ -30,5 +32,10 @@ class ApiResponse {
       totalResults: int.tryParse(json['total_results']),
       results: json['results'],
     );
+  }
+
+  //Convert from json string to ApiResponse object
+  factory ApiResponse.fromJsonString(String jsonString) {
+    return ApiResponse.fromJson(json.decode(jsonString));
   }
 }

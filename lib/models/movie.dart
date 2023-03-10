@@ -1,5 +1,7 @@
 // This is the model class for the Movie object.
 // It is used to parse the JSON response from the API.
+import 'dart:convert';
+
 class Movie {
   int? id;
 
@@ -33,5 +35,10 @@ class Movie {
       overview: json['overview'],
       voteAverage: json['vote_average'],
     );
+  }
+
+  //Convert from json string to Movie object
+  factory Movie.fromJsonString(String jsonString) {
+    return Movie.fromJson(json.decode(jsonString));
   }
 }
