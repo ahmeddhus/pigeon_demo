@@ -19,8 +19,8 @@ public class MainActivity extends FlutterActivity {
         // The method is called with a MoviesRequest object that contains the
         // data sent from the Dart side of the app.
         @Override
-        public void getMovies(@NonNull String apiKey, Result<Object> result) {
-            MoviesApi.getMovies(apiKey, new MoviesApi.Callback<>() {
+        public void getMovies(@NonNull String urlString, Result<Object> result) {
+            MoviesApi.getMovies(urlString, new MoviesApi.Callback<String>() {
                 @Override
                 public void onSuccess(String data) {
                     // The MoviesApi.getMovies method returns a String

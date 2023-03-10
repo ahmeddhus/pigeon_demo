@@ -10,5 +10,5 @@ abstract class MoviesHostApi {
 
   // Invoke the `getMovies` method on Android and iOS with the `apiKey` parameter and return the result as a `Object?`.
   @async
-  Object? getMovies(String apiKey);
+  Object? getMovies(String urlString);
 }

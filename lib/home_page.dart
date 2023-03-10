@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:instabug_flutter_task/generated/pigeon.dart';
 import 'package:instabug_flutter_task/models/movie.dart';
+import 'package:instabug_flutter_task/utils/api_links.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -44,7 +46,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> getMovies() async {
-    dynamic response = await MoviesHostApi().getMovies('49c7e595e32c8886ddb7e18304fc1eb0');
-    print('response: $response');
+    dynamic response = await MoviesHostApi().getMovies('$moviesApiUrl$apiKey');
+    if (kDebugMode) debugPrint('response: $response');
   }
 }

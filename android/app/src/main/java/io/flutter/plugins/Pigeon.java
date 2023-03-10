@@ -40,7 +40,7 @@ public class Pigeon {
   /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
   public interface MoviesHostApi {
 
-    void getMovies(@NonNull String apiKey, Result<Object> result);
+    void getMovies(@NonNull String urlString, Result<Object> result);
 
     /** The codec used by MoviesHostApi. */
     static MessageCodec<Object> getCodec() {
@@ -59,9 +59,9 @@ public class Pigeon {
                 try {
                   ArrayList<Object> args = (ArrayList<Object>) message;
                   assert args != null;
-                  String apiKeyArg = (String) args.get(0);
-                  if (apiKeyArg == null) {
-                    throw new NullPointerException("apiKeyArg unexpectedly null.");
+                  String urlStringArg = (String) args.get(0);
+                  if (urlStringArg == null) {
+                    throw new NullPointerException("urlStringArg unexpectedly null.");
                   }
                   Result<Object> resultCallback =
                       new Result<Object>() {
@@ -76,7 +76,7 @@ public class Pigeon {
                         }
                       };
 
-                  api.getMovies(apiKeyArg, resultCallback);
+                  api.getMovies(urlStringArg, resultCallback);
                 } catch (Error | RuntimeException exception) {
                   ArrayList<Object> wrappedError = wrapError(exception);
                   reply.reply(wrappedError);

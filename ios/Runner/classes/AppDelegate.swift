@@ -2,8 +2,8 @@ import UIKit
 import Flutter
 
 class MyApi: NSObject, MoviesHostApi {
-    func getMovies(apiKey: String, completion: @escaping (Result<Any?, Error>) -> Void) {
-        return MoviesApi.getMovieData(apiKey: apiKey, completion: completion);
+    func getMovies(urlString: String, completion: @escaping (Result<Any?, Error>) -> Void) {
+        return MoviesApi.getMovieData(stringUrl: urlString, completion: completion);
     }
 }
 

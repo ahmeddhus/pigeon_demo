@@ -18,10 +18,9 @@ public class MoviesApi {
 
     // This method makes a network request to the Movies API
     // and returns the JSON data as a String.
-    public static void getMovies(String apiKey, final Callback<String> callback) {
+    public static void getMovies(String urlString, final Callback<String> callback) {
         executor.execute(() -> {
             try {
-                String urlString = "https://api.themoviedb.org/3/discover/movie?api_key=" + apiKey;
                 URL url = new URL(urlString);
 
                 // Make the network request.

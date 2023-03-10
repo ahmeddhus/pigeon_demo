@@ -18,12 +18,12 @@ class MoviesHostApi {
 
   static const MessageCodec<Object?> codec = StandardMessageCodec();
 
-  Future<Object?> getMovies(String arg_apiKey) async {
+  Future<Object?> getMovies(String arg_urlString) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
         'dev.flutter.pigeon.MoviesHostApi.getMovies', codec,
         binaryMessenger: _binaryMessenger);
     final List<Object?>? replyList =
-        await channel.send(<Object?>[arg_apiKey]) as List<Object?>?;
+        await channel.send(<Object?>[arg_urlString]) as List<Object?>?;
     if (replyList == null) {
       throw PlatformException(
         code: 'channel-error',
