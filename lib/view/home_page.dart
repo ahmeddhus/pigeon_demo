@@ -6,6 +6,7 @@ import 'package:instabug_flutter_task/utils/api_links.dart';
 import 'package:instabug_flutter_task/view/widgets/app_grid_view.dart';
 import 'package:instabug_flutter_task/view/widgets/movie_item_shimmer.dart';
 import 'package:instabug_flutter_task/view/widgets/movie_item_widget.dart';
+import 'package:instabug_flutter_task/view/widgets/no_movies_found.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -66,9 +67,7 @@ class _HomePageState extends State<HomePage> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: _movies.isEmpty && !loading
-              ? const Center(
-                  child: Text('No movies found'),
-                )
+              ? const NoMoviesFound()
               : HomeGridView(
                   itemCount: loading ? 10 : _movies.length,
                   itemBuilder: (BuildContext context, int index) {

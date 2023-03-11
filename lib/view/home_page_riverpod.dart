@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:instabug_flutter_task/view/widgets/app_grid_view.dart';
 import 'package:instabug_flutter_task/view/widgets/movie_item_shimmer.dart';
 import 'package:instabug_flutter_task/view/widgets/movie_item_widget.dart';
+import 'package:instabug_flutter_task/view/widgets/no_movies_found.dart';
 import 'package:instabug_flutter_task/viewModels/movies_view_model.dart';
 
 class RiverpodHomePage extends ConsumerWidget {
@@ -26,14 +27,16 @@ class RiverpodHomePage extends ConsumerWidget {
           padding: const EdgeInsets.all(8.0),
           child: moviesProvider.when(
             data: (movies) {
-              return HomeGridView(
-                itemCount: movies.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return MovieItemWidget(
-                    movie: movies[index],
-                  );
-                },
-              );
+              return movies.isEmpty
+                  ? const NoMoviesFound()
+                  : HomeGridView(
+                      itemCount: movies.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return MovieItemWidget(
+                          movie: movies[index],
+                        );
+                      },
+                    );
             },
             loading: () {
               return HomeGridView(
@@ -45,9 +48,7 @@ class RiverpodHomePage extends ConsumerWidget {
             },
             error: (error, stack) {
               debugPrint('RiverpodHomePage: $error');
-              return const Center(
-                child: Text('No movies found'),
-              );
+              return const NoMoviesFound();
             },
           ),
         ),
