@@ -4,6 +4,7 @@ import 'package:instabug_flutter_task/models/api_response.dart';
 import 'package:instabug_flutter_task/models/movie.dart';
 import 'package:instabug_flutter_task/utils/api_links.dart';
 import 'package:instabug_flutter_task/view/widgets/app_grid_view.dart';
+import 'package:instabug_flutter_task/view/widgets/app_scaffold.dart';
 import 'package:instabug_flutter_task/view/widgets/movie_item_shimmer.dart';
 import 'package:instabug_flutter_task/view/widgets/movie_list_item.dart';
 import 'package:instabug_flutter_task/view/widgets/no_movies_found.dart';
@@ -57,29 +58,20 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Movies List'),
-      ),
-      body: RefreshIndicator(
-        //Refresh the movies list
-        onRefresh: () => _onRefresh(),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: _movies.isEmpty && !loading
-              ? const NoMoviesFound()
-              : HomeGridView(
-                  itemCount: loading ? 10 : _movies.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return loading
-                        ? const MovieItemShimmer()
-                        : MovieListItem(
-                            movie: _movies[index],
-                          );
-                  },
-                ),
-        ),
-      ),
+    return AppScaffold(
+      onRefresh: _onRefresh,
+      child: _movies.isEmpty && !loading
+          ? const NoMoviesFound()
+          : HomeGridView(
+              itemCount: loading ? 10 : _movies.length,
+              itemBuilder: (BuildContext context, int index) {
+                return loading
+                    ? const MovieItemShimmer()
+                    : MovieListItem(
+                        movie: _movies[index],
+                      );
+              },
+            ),
     );
   }
 
