@@ -12,6 +12,7 @@ A new Flutter project that fetch movies list from native side and beck with the 
 - [x] Conver json string to Model objects.
 - [x] Show data on screen.
 - [x] Build cool UI.
+- [x] Use Riverpod as State management.
 - [ ] Error handling.
 - [ ] Unit test.
 - [ ] Look for any enhancement.
