@@ -5,7 +5,7 @@ import 'package:instabug_flutter_task/models/movie.dart';
 import 'package:instabug_flutter_task/utils/api_links.dart';
 import 'package:instabug_flutter_task/view/widgets/app_grid_view.dart';
 import 'package:instabug_flutter_task/view/widgets/movie_item_shimmer.dart';
-import 'package:instabug_flutter_task/view/widgets/movie_item_widget.dart';
+import 'package:instabug_flutter_task/view/widgets/movie_list_item.dart';
 import 'package:instabug_flutter_task/view/widgets/no_movies_found.dart';
 
 class HomePage extends StatefulWidget {
@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
                   itemBuilder: (BuildContext context, int index) {
                     return loading
                         ? const MovieItemShimmer()
-                        : MovieItemWidget(
+                        : MovieListItem(
                             movie: _movies[index],
                           );
                   },

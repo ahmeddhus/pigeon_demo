@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:instabug_flutter_task/models/movie.dart';
 import 'package:instabug_flutter_task/view/widgets/movie_item_shimmer.dart';
 
-class MovieItemWidget extends StatelessWidget {
+class MovieListItem extends StatelessWidget {
   final Movie movie;
 
-  const MovieItemWidget({required this.movie, Key? key}) : super(key: key);
+  const MovieListItem({required this.movie, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
