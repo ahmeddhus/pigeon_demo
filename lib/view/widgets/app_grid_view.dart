@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+
+//This widget is used to show the movies list in a grid view.
 class HomeGridView extends StatelessWidget {
   final int itemCount;
 

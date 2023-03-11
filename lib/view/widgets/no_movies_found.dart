@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+
+//This widget is used to show a message when no movies are found
 class NoMoviesFound extends StatelessWidget {
   const NoMoviesFound({Key? key}) : super(key: key);
 

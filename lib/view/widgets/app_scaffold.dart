@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+//This widget is used to wrap the home page/riverpod
+// and provide a refresh indicator
 class AppScaffold extends StatelessWidget {
   final Function() onRefresh;
   final Widget child;

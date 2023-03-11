@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:instabug_flutter_task/models/movie.dart';
 import 'package:instabug_flutter_task/view/widgets/movie_item_shimmer.dart';
 
+//This widget is used to show a movie item
 class MovieListItem extends StatelessWidget {
   final Movie movie;
 
