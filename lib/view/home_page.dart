@@ -1,9 +1,9 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:instabug_flutter_task/generated/pigeon.dart';
 import 'package:instabug_flutter_task/models/api_response.dart';
 import 'package:instabug_flutter_task/models/movie.dart';
 import 'package:instabug_flutter_task/utils/api_links.dart';
+import 'package:instabug_flutter_task/view/widgets/app_grid_view.dart';
 import 'package:instabug_flutter_task/view/widgets/movie_item_shimmer.dart';
 import 'package:instabug_flutter_task/view/widgets/movie_item_widget.dart';
 
@@ -50,57 +50,50 @@ class _HomePageState extends State<HomePage> {
     } catch (e) {
       debugPrint('_getMovies(): $e');
     } finally {
-      loading = false;
-      setState(() {});
+      _toggleLoading(on: false);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    // Replace with the width of your item
-    const itemWidth = 120.0;
-
-    // Calculate the number of items that can fit in a row with the given width
-    //accounting to screen width and item given width.
-    final itemCount = (screenWidth / itemWidth).floor();
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Movies List'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: _movies.isEmpty && !loading
-            ? const Center(
-                child: Text('No movies found'),
-              )
-            : GridView.builder(
-                itemCount: _movies.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  //Show 10 items in a row when the movies are being fetched from the API
-                  //and show the calculated number of items in a row when the movies are fetched
-                  crossAxisCount: loading ? 10 : itemCount,
-
-                  // Set the cross axis spacing(horizontal spacing) to 8 to make the items
-                  crossAxisSpacing: 8,
-
-                  // Set the main axis spacing(vertical) to 8 to make the items
-                  mainAxisSpacing: 8,
-
-                  // Set the child aspect ratio to 2/3 to make the items
-                  childAspectRatio: 2 / 3,
+      body: RefreshIndicator(
+        //Refresh the movies list
+        onRefresh: () => _onRefresh(),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: _movies.isEmpty && !loading
+              ? const Center(
+                  child: Text('No movies found'),
+                )
+              : HomeGridView(
+                  itemCount: loading ? 10 : _movies.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return loading
+                        ? const MovieItemShimmer()
+                        : MovieItemWidget(
+                            movie: _movies[index],
+                          );
+                  },
                 ),
-                itemBuilder: (context, index) {
-                  //Show a Shimmer widget while the movies are being fetched from the API
-                  //and show the movie item widget when the movies are fetched
-                  return loading
-                      ? const MovieItemShimmer()
-                      : MovieItemWidget(movie: _movies[index]);
-                },
-              ),
+        ),
       ),
     );
+  }
+
+  //Refresh the movies list
+  Future<void> _onRefresh() async {
+    _toggleLoading(on: true);
+    _movies.clear();
+    await _getMovies();
+  }
+
+  //Toggle the loading flag and update the UI
+  void _toggleLoading({required bool on}) {
+    loading = on;
+    setState(() {});
   }
 }
