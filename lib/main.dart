@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:instabug_flutter_task/home_page.dart';
+import 'package:instabug_flutter_task/view/home_page.dart';
 
 void main() {
 
