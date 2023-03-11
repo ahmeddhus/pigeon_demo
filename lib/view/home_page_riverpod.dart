@@ -20,16 +20,25 @@ class RiverpodHomePage extends ConsumerWidget {
       onRefresh: () => ref.refresh(getMoviesProvider),
       child: moviesProvider.when(
         data: (movies) {
-          return movies.isEmpty
-              ? const NoMoviesFound()
-              : HomeGridView(
-                  itemCount: movies.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return MovieListItem(
-                      movie: movies[index],
-                    );
-                  },
-                );
+
+          //Wrap in stack so that the [RefreshIndicator] working fine
+          //Because the [RefreshIndicator] must wrap the scrollable widget
+          return Stack(
+            children: [
+              if (movies.isEmpty)
+                const Positioned.fill(
+                  child: NoMoviesFound(),
+                ),
+              HomeGridView(
+                itemCount: movies.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return MovieListItem(
+                    movie: movies[index],
+                  );
+                },
+              ),
+            ],
+          );
         },
         loading: () {
           return HomeGridView(
