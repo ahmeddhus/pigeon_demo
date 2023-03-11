@@ -12,7 +12,7 @@ class Movie {
 
   String? posterPath;
 
-  String? releaseDate;
+  DateTime? releaseDate;
 
   // The `overview` property defines the movie's description.
   String? overview;
@@ -38,7 +38,7 @@ class Movie {
       id: converter.convertToInt(key: "id"),
       title: converter.convertToString(key: "title"),
       posterPath: converter.convertToString(key: "poster_path"),
-      releaseDate: converter.convertToString(key: "releaseDate"),
+      releaseDate: converter.convertToDate(key: "release_date"),
       overview: converter.convertToString(key: "overview"),
       voteAverage: converter.convertToDouble(key: "vote_average"),
     );
