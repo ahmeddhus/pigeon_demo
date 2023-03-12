@@ -9,9 +9,7 @@ import 'package:instabug_flutter_task/utils/api_links.dart';
 //and storing them in a list of movies to be used in the app.
 class MoviesModule {
 
-  MoviesModule._internal();
-
-  static final MoviesModule instance = MoviesModule._internal();
+  MoviesModule();
 
   final List<Movie> movies = [];
 

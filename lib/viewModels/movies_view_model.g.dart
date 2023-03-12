@@ -6,7 +6,7 @@ part of 'movies_view_model.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getMoviesHash() => r'91041e1ebbec0041449919df5e488199e515aaf0';
+String _$getMoviesHash() => r'8aed5dd115dd5e87d515e6e20685ac0730922a8f';
 
 /// See also [getMovies].
 @ProviderFor(getMovies)

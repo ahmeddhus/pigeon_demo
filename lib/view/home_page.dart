@@ -18,17 +18,19 @@ class _HomePageState extends State<HomePage> {
   //to show a progress indicator
   bool loading = true;
 
+  late MoviesModule moviesModule;
+
   @override
   void initState() {
     super.initState();
 
+    moviesModule = MoviesModule();
     //Fetch movies from the API
     _getMovies();
   }
 
   @override
   Widget build(BuildContext context) {
-    final MoviesModule moviesModule = MoviesModule.instance;
     final bool isFetchedMoviesEmpty = moviesModule.movies.isEmpty && !loading;
 
     return AppScaffold(
@@ -59,14 +61,14 @@ class _HomePageState extends State<HomePage> {
 
   //Fetch movies from the API
   Future<void> _getMovies() async {
-    await MoviesModule.instance.getMovies();
+    await moviesModule.getMovies();
     _toggleLoading(on: false);
   }
 
   //Refresh the movies list
   Future<void> _onRefresh() async {
     _toggleLoading(on: true);
-    await MoviesModule.instance.onRefresh();
+    await moviesModule.onRefresh();
     _toggleLoading(on: false);
   }
 
