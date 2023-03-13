@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:instabug_flutter_task/utils/from_map.dart';
 
 class ApiResponse {
+
   // Page number of the current response.
   final int? page;
 
@@ -20,6 +21,12 @@ class ApiResponse {
 
   final List<Map<String, dynamic>>? listResults;
 
+  // The `statusCode` property is used to store the status code in case of an error.
+  final int? statusCode;
+
+  // The `success` property is used to store the success status in case of an error.
+  final bool? success;
+
   // The `statusMessage` property is used to store the error message in case of an error.
   final String? statusMessage;
 
@@ -29,7 +36,9 @@ class ApiResponse {
     this.totalResults,
     this.results,
     this.listResults,
+    this.statusCode,
     this.statusMessage,
+    this.success,
   });
 
   // This method is used to parse the Map response from the API.
@@ -44,7 +53,9 @@ class ApiResponse {
       totalResults: converter.convertToInt(key: "total_results"),
       results: json["results"],
       listResults: converter.convertToList(key: "results"),
-      statusMessage: converter.convertToString(key: "statusMessage"),
+      statusMessage: converter.convertToString(key: "status_message"),
+      statusCode: converter.convertToInt(key: "status_code"),
+      success: converter.convertToBool(key: "success"),
     );
   }
 
