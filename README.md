@@ -10,6 +10,7 @@ This project has 2 flavors one without any state management because there's no n
 - [Pigeon](https://pub.dev/packages/pigeon) - Used to transfer data between native and Flutter
 - [Mockito](https://pub.dev/packages/mockito) -  For unit test mocks.
 - [Riverpod](https://pub.dev/packages/riverpod) - Used for state management.
+- [Shimmer]() - for loading with shimmer effects.
 
 
 ## TODO list
