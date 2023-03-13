@@ -13,6 +13,8 @@ class MoviesModule {
 
   final List<Movie> movies = [];
 
+  ApiResponse? apiResponse;
+
   static var _host = MoviesHostApi();
 
   @visibleForTesting
@@ -27,13 +29,13 @@ class MoviesModule {
 
       //Check if the response is a string
       if (response is String) {
-        ApiResponse apiResponse = ApiResponse.fromJsonString(response);
+        apiResponse = ApiResponse.fromJsonString(response);
 
         //Check if the response is a list of maps
-        if (apiResponse.results is List<Map>) {
+        if (apiResponse?.results is List<Map>) {
           //Add the movies to the list
           movies.addAll(
-              (apiResponse.results as List).map((itemWord) => Movie.fromMap(itemWord)).toList());
+              (apiResponse?.results as List).map((itemWord) => Movie.fromMap(itemWord)).toList());
         }
       }
     } catch (e) {
