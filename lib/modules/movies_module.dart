@@ -4,7 +4,7 @@ import 'package:instabug_flutter_task/models/api_response.dart';
 import 'package:instabug_flutter_task/models/movie.dart';
 import 'package:instabug_flutter_task/utils/api_links.dart';
 
-//This class is a singleton class to handle the movies module
+//This is a class to handle the movies module
 //It is responsible for fetching movies from the API
 //and storing them in a list of movies to be used in the app.
 class MoviesModule {
