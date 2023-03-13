@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:instabug_flutter_task/models/movie.dart';
 import 'package:instabug_flutter_task/view/widgets/app_grid_view.dart';
 import 'package:instabug_flutter_task/view/widgets/app_scaffold.dart';
 import 'package:instabug_flutter_task/view/widgets/movie_item_shimmer.dart';
@@ -14,45 +15,36 @@ class RiverpodHomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final moviesProvider = ref.watch(getMoviesProvider);
+    final MoviesViewModel moviesViewModel = ref.watch(moviesModuleProvider);
+    final List<Movie> movies = moviesViewModel.movies;
 
     return AppScaffold(
-      onRefresh: () => ref.refresh(getMoviesProvider),
-      child: moviesProvider.when(
-        data: (movies) {
-
-          //Wrap in stack so that the [RefreshIndicator] working fine
-          //Because the [RefreshIndicator] must wrap the scrollable widget
-          return Stack(
-            children: [
-              if (movies.isEmpty)
-                const Positioned.fill(
-                  child: NoMoviesFound(),
+      onRefresh: () {
+        return moviesViewModel.onRefresh();
+      },
+      child: moviesViewModel.isLoading
+          ? HomeGridView(
+              itemCount: 10,
+              itemBuilder: (BuildContext context, int index) {
+                return const MovieItemShimmer();
+              },
+            )
+          : Stack(
+              children: [
+                if (movies.isEmpty && !moviesViewModel.isLoading)
+                  const Positioned.fill(
+                    child: NoMoviesFound(),
+                  ),
+                HomeGridView(
+                  itemCount: movies.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return MovieListItem(
+                      movie: movies[index],
+                    );
+                  },
                 ),
-              HomeGridView(
-                itemCount: movies.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return MovieListItem(
-                    movie: movies[index],
-                  );
-                },
-              ),
-            ],
-          );
-        },
-        loading: () {
-          return HomeGridView(
-            itemCount: 10,
-            itemBuilder: (BuildContext context, int index) {
-              return const MovieItemShimmer();
-            },
-          );
-        },
-        error: (error, stack) {
-          debugPrint('RiverpodHomePage: $error');
-          return const NoMoviesFound();
-        },
-      ),
+              ],
+            ),
     );
   }
 }
