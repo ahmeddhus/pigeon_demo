@@ -79,12 +79,53 @@ void main() {
       await moviesModule.getMovies();
 
       expect(moviesModule.apiResponse?.statusCode, 7);
-      expect(moviesModule.apiResponse?.statusMessage, "Invalid API key: You must be granted a valid key.");
+      expect(moviesModule.apiResponse?.statusMessage,
+          "Invalid API key: You must be granted a valid key.");
       expect(moviesModule.apiResponse?.success, false);
 
       // Verify that the movies have been added to the list
       expect(moviesModule.movies.length, 0);
+    });
 
+    //Test to check if the list is empty after refresh
+    test('should fetch and return full json expect results', () async {
+      // Mock the response from the API
+      when(mHost.getMovies(any)).thenAnswer((_) async => Mocks.noMoviesListMock);
+
+      // Call the method to fetch the movies
+      await moviesModule.getMovies();
+
+      // Verify ApiResponse properties.
+      expect(moviesModule.apiResponse?.page, 1);
+      expect(moviesModule.apiResponse?.totalResults, 10000);
+      expect(moviesModule.apiResponse?.totalPages, 500);
+
+      // Verify that the movies have been added to the list
+      expect(moviesModule.movies.length, 0);
+    });
+  });
+
+  group('MoviesModule with invalid JSON responses', () {
+    final mHost = MockMoviesHostApi();
+    final moviesModule = MoviesModule();
+
+    setUpAll(() {
+      moviesModule.$setHostApi(mHost);
+    });
+
+    //Test to check if the list still empty after invalid JSON response
+    test('should not fetch and return only inner exception', () async {
+      // Mock the response from the API
+      when(mHost.getMovies(any)).thenAnswer((_) async => Mocks.invalidJsonMock);
+
+      // Call the method to fetch the movies
+      await moviesModule.getMovies();
+
+      expect(moviesModule.apiResponse?.innerException, contains("ApiResponse.fromJsonString:"));
+      expect(moviesModule.apiResponse?.success, false);
+
+      // Verify that the movies have been added to the list
+      expect(moviesModule.movies.length, 0);
     });
   });
 }

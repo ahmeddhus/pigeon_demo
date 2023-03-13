@@ -31,9 +31,22 @@ mixin Mocks {
 
     ]
 }''';
+
   static String errorResponseMock = '''{
     "status_code": 7,
     "status_message": "Invalid API key: You must be granted a valid key.",
     "success": false
+}''';
+
+  static String noMoviesListMock = '''{
+    "page": 1,
+    "total_results": 10000,
+    "total_pages": 500
+}''';
+
+  static String invalidJsonMock = '''{
+    "page": 1
+    "total_results": 10000,
+    "total_pages": 500,
 }''';
 }
