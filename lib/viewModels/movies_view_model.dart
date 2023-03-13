@@ -12,5 +12,6 @@ part 'movies_view_model.g.dart';
 //To generate the provider for all the files run the command: flutter pub run build_runner build --delete-conflicting-outputs
 @riverpod
 Future<List<Movie>> getMovies(GetMoviesRef ref) async {
-  return MoviesModule.instance.getMovies();
+  MoviesModule module = MoviesModule();
+  return module.getMovies();
 }
