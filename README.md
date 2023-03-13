@@ -1,6 +1,15 @@
 # instabug_flutter_task
 
-A new Flutter project that fetch movies list from native side and beck with the results to flutter side
+A new Flutter project that fetch movies list from native side and beck with the results to flutter side.
+
+This project has 2 flavors one without any state management because there's no need for it as it's a small project, and one using [Riverpod](https://pub.dev/packages/riverpod) as state management in case you're cerious about how could I handle it using state management.
+
+
+# This project built With
+- [Flutter](https://flutter.dev/) - The mobile framework used
+- [Pigeon](https://pub.dev/packages/pigeon) - Used to transfer data between native and Flutter
+- [Mockito](https://pub.dev/packages/mockito) -  For unit test mocks.
+- [Riverpod](https://pub.dev/packages/riverpod) - Used for state management.
 
 
 ## TODO list
