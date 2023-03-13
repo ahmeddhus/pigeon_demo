@@ -18,11 +18,15 @@ class ApiResponse {
   // The `results` property is dynamic because it can be a list of movies, a list of TV shows, etc.
   final dynamic results;
 
+  // The `statusMessage` property is used to store the error message in case of an error.
+  final String? statusMessage;
+
   ApiResponse({
     this.page,
     this.totalPages,
     this.totalResults,
     this.results,
+    this.statusMessage,
   });
 
   // This method is used to parse the Map response from the API.
@@ -36,6 +40,7 @@ class ApiResponse {
       totalPages: converter.convertToInt(key: "total_pages"),
       totalResults: converter.convertToInt(key: "total_results"),
       results: converter.convertToList(key: "results"),
+      statusMessage: converter.convertToString(key: "statusMessage"),
     );
   }
 
