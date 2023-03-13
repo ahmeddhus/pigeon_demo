@@ -5,23 +5,20 @@ mixin Mocks {
     "total_pages": 500,
     "results": [
         {
-            "popularity": 100.0,
-            "vote_count": 100,
-            "video": false,
-            "poster_path": "/poster_path",
-            "id": 100,
-            "adult": false,
-            "backdrop_path": "/backdrop_path",
-            "original_language": "en",
-            "original_title": "original_title",
-            "genre_ids": [
-                100,
-                200
-            ],
-            "title": "Megan",
+            "poster_path": "/poster_path1",
+            "id": 1,
+            "title": "Movie 1",
             "vote_average": 10.0,
-            "overview": "overview",
+            "overview": "overview1",
             "release_date": "2020-01-01"
+        },
+         {
+            "poster_path": "/poster_path2",
+            "id": 2,
+            "title": "Movie 2",
+            "vote_average": 20.0,
+            "overview": "overview2",
+            "release_date": "2020-02-02"
         }
     ]
 }''';

@@ -31,9 +31,21 @@ void main() {
       await moviesModule.getMovies();
 
       // Verify that the movies have been added to the list
-      expect(moviesModule.movies.length, 1);
-      expect(moviesModule.movies[0].id, 100);
-      expect(moviesModule.movies[0].title, 'Megan');
+      expect(moviesModule.movies.length, 2);
+
+      expect(moviesModule.movies[0].id, 1);
+      expect(moviesModule.movies[0].title, 'Movie 1');
+      expect(moviesModule.movies[0].voteAverage, 10.0);
+      expect(moviesModule.movies[0].overview, 'overview1');
+      expect(moviesModule.movies[0].posterPath, '/poster_path1');
+      expect(moviesModule.movies[0].releaseDate, DateTime.parse('2020-01-01'));
+
+      expect(moviesModule.movies[1].id, 2);
+      expect(moviesModule.movies[1].title, 'Movie 2');
+      expect(moviesModule.movies[1].voteAverage, 20.0);
+      expect(moviesModule.movies[1].overview, 'overview2');
+      expect(moviesModule.movies[1].posterPath, '/poster_path2');
+      expect(moviesModule.movies[1].releaseDate, DateTime.parse('2020-02-02'));
     });
   });
 }
