@@ -4,9 +4,9 @@ import 'package:instabug_flutter_task/models/api_response.dart';
 import 'package:instabug_flutter_task/models/movie.dart';
 import 'package:instabug_flutter_task/utils/api_links.dart';
 
-//This is a class to handle the movies module
-//It is responsible for fetching movies from the API
-//and storing them in a list of movies to be used in the app.
+/// This is a class to handle the movies module
+/// It is responsible for fetching movies from the API
+/// and storing them in a list of movies to be used in the app.
 class MoviesModule {
 
   MoviesModule();
@@ -24,15 +24,15 @@ class MoviesModule {
 
   Future<List<Movie>> getMovies() async {
     try {
-      //Invoke the API to fetch movies from the API which is implemented in the native side
+      /// Invoke the API to fetch movies from the API which is implemented in the native side
       dynamic response = await _host.getMovies('$moviesApiUrl$apiKey');
 
-      //Check if the response is a string
+      /// Check if the response is a string
       apiResponse = ApiResponse.fromJsonString(response);
 
-      //Check if the response is a list of maps
+      /// Check if the response is a list of maps
       if ((apiResponse?.listResults?.isNotEmpty ?? false)) {
-        //Add the movies to the list
+        /// Add the movies to the list
         movies.addAll(
             (apiResponse?.listResults as List).map((itemWord) => Movie.fromMap(itemWord)).toList());
       }
