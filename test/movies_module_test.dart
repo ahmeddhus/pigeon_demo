@@ -127,5 +127,51 @@ void main() {
       // Verify that the movies have been added to the list
       expect(moviesModule.movies.length, 0);
     });
+
+    //Test to check if the list still empty after return empty string
+    test('should not fetch and return only inner exception', () async {
+      // Mock the response from the API
+      when(mHost.getMovies(any)).thenAnswer((_) async => '');
+
+      // Call the method to fetch the movies
+      await moviesModule.getMovies();
+
+      expect(moviesModule.apiResponse?.innerException, contains("ApiResponse.fromJsonString:"));
+      expect(moviesModule.apiResponse?.success, false);
+
+      // Verify that the movies have been added to the list
+      expect(moviesModule.movies.length, 0);
+    });
+
+    //Test to check if the list still empty after return normal string
+    test('should not fetch and return only inner exception', () async {
+      // Mock the response from the API
+      when(mHost.getMovies(any)).thenAnswer((_) async => 'Error');
+
+      // Call the method to fetch the movies
+      await moviesModule.getMovies();
+
+      expect(moviesModule.apiResponse?.innerException, contains("ApiResponse.fromJsonString:"));
+      expect(moviesModule.apiResponse?.success, false);
+
+      // Verify that the movies have been added to the list
+      expect(moviesModule.movies.length, 0);
+    });
+
+
+    //Test to check if the list still empty after return null
+    test('should not fetch and return only inner exception', () async {
+      // Mock the response from the API
+      when(mHost.getMovies(any)).thenAnswer((_) async => null);
+
+      // Call the method to fetch the movies
+      await moviesModule.getMovies();
+
+      expect(moviesModule.apiResponse?.innerException, contains("ApiResponse.fromJsonString:"));
+      expect(moviesModule.apiResponse?.success, false);
+
+      // Verify that the movies have been added to the list
+      expect(moviesModule.movies.length, 0);
+    });
   });
 }
