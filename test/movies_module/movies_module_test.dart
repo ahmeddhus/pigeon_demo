@@ -5,7 +5,7 @@ import 'package:instabug_flutter_task/modules/movies_module.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'mocks.dart';
+import 'api_response_mocks.dart';
 import 'movies_module_test.mocks.dart';
 
 @GenerateMocks([
@@ -26,7 +26,7 @@ void main() {
     //Test to check if the list is not empty.
     test('should fetch and add movies to the list', () async {
       // Mock the response from the API
-      when(mHost.getMovies(any)).thenAnswer((_) async => Mocks.moviesMock);
+      when(mHost.getMovies(any)).thenAnswer((_) async => ApiResponseMocks.moviesMock);
 
       // Call the method to fetch the movies
       await moviesModule.getMovies();
@@ -58,7 +58,7 @@ void main() {
     //Test to check if the list is empty after refresh
     test('should fetch and add no movies to the list after refresh', () async {
       // Mock the response from the API
-      when(mHost.getMovies(any)).thenAnswer((_) async => Mocks.emptyMoviesListMock);
+      when(mHost.getMovies(any)).thenAnswer((_) async => ApiResponseMocks.emptyMoviesListMock);
 
       await moviesModule.onRefresh();
 
@@ -67,13 +67,12 @@ void main() {
 
       // Verify that the movies have been added to the list
       expect(moviesModule.movies.length, 0);
-
     });
 
     //Test to check if the list is empty after refresh
     test('should fetch and return empty error message', () async {
       // Mock the response from the API
-      when(mHost.getMovies(any)).thenAnswer((_) async => Mocks.errorResponseMock);
+      when(mHost.getMovies(any)).thenAnswer((_) async => ApiResponseMocks.errorResponseMock);
 
       // Call the method to fetch the movies
       await moviesModule.getMovies();
@@ -90,7 +89,7 @@ void main() {
     //Test to check if the list is empty after refresh
     test('should fetch and return full json expect results', () async {
       // Mock the response from the API
-      when(mHost.getMovies(any)).thenAnswer((_) async => Mocks.noMoviesListMock);
+      when(mHost.getMovies(any)).thenAnswer((_) async => ApiResponseMocks.noMoviesListMock);
 
       // Call the method to fetch the movies
       await moviesModule.getMovies();
@@ -116,7 +115,7 @@ void main() {
     //Test to check if the list still empty after invalid JSON response
     test('should not fetch and return only inner exception', () async {
       // Mock the response from the API
-      when(mHost.getMovies(any)).thenAnswer((_) async => Mocks.invalidJsonMock);
+      when(mHost.getMovies(any)).thenAnswer((_) async => ApiResponseMocks.invalidJsonMock);
 
       // Call the method to fetch the movies
       await moviesModule.getMovies();

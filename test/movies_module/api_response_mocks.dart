@@ -1,4 +1,4 @@
-mixin Mocks {
+mixin ApiResponseMocks {
   static String moviesMock = '''{
     "page": 1,
     "total_results": 10000,
