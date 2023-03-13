@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:instabug_flutter_task/generated/pigeon.dart';
 import 'package:instabug_flutter_task/models/api_response.dart';
 import 'package:instabug_flutter_task/models/movie.dart';
-import 'package:instabug_flutter_task/utils/api_links.dart';
-
-//This class is a singleton class to handle the movies module
-//It is responsible for fetching movies from the API
-//and storing them in a list of movies to be used in the app.
+import 'package:instabug_flutter_task/modules/movies_module.dart';
 
 //This is the provider that will be used to access the movies module
 //It will be used in the home page to fetch the movies inside [HomePageRiverpod]
@@ -16,37 +11,20 @@ final moviesModuleProvider = ChangeNotifierProvider<MoviesViewModel>((ref) {
 });
 
 class MoviesViewModel extends ChangeNotifier {
+  late MoviesModule moviesModule;
+
   MoviesViewModel() {
+    moviesModule = MoviesModule();
     getMovies();
   }
 
-  final List<Movie> movies = [];
+  List<Movie> get movies => moviesModule.movies;
 
   bool isLoading = true;
 
-  ApiResponse? apiResponse;
-
-  static var _host = MoviesHostApi();
-
-  @visibleForTesting
-  void $setHostApi(MoviesHostApi host) {
-    _host = host;
-  }
-
   Future<List<Movie>> getMovies() async {
     try {
-      //Invoke the API to fetch movies from the API which is implemented in the native side
-      dynamic response = await _host.getMovies('$moviesApiUrl$apiKey');
-
-      //Check if the response is a string
-      apiResponse = ApiResponse.fromJsonString(response);
-
-      //Check if the response is a list of maps
-      if ((apiResponse?.listResults?.isNotEmpty ?? false)) {
-        //Add the movies to the list
-        movies.addAll(
-            (apiResponse?.listResults as List).map((itemWord) => Movie.fromMap(itemWord)).toList());
-      }
+      await moviesModule.getMovies();
     } on ApiResponse catch (apiResponse) {
       debugPrint('getMovies(): ${apiResponse.innerException} && ${apiResponse.statusMessage}');
     } catch (e) {
@@ -60,16 +38,12 @@ class MoviesViewModel extends ChangeNotifier {
 
   Future<void> onRefresh() async {
     toggleLoading(on: true);
-    movies.clear();
-    await getMovies();
+    await moviesModule.onRefresh();
+    toggleLoading(on: false);
   }
 
   void toggleLoading({bool on = false}) {
     isLoading = on;
     notifyListeners();
-  }
-
-  void clearMovies() {
-    movies.clear();
   }
 }

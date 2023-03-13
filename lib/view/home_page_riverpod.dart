@@ -20,7 +20,6 @@ class RiverpodHomePage extends ConsumerWidget {
 
     return AppScaffold(
       onRefresh: () {
-        ref.invalidate(moviesModuleProvider);
         return moviesViewModel.onRefresh();
       },
       child: moviesViewModel.isLoading
