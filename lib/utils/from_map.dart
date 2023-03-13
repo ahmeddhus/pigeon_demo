@@ -110,4 +110,31 @@ class FromMap {
     //If the value is not a List, return null
     return null;
   }
+
+  //Convert the value of the given key to bool
+  bool? convertToBool({
+    required String key,
+    bool? defaultValue,
+    Map<String, dynamic>? innerMap,
+  }) {
+    //If the innerMap is not null, use it, otherwise use the map
+    final Map<String, dynamic> tempMap = innerMap ?? map;
+
+    //If the value of the given key is already a bool, return it
+    if (tempMap[key] is bool?) {
+      return (tempMap[key] as bool?) ?? defaultValue;
+    } else {
+      //If the value of the given key is not a bool,
+      //convert it to String and then to try to convert it to bool
+      final String? result = tempMap[key]?.toString().toLowerCase();
+      if (<String>["true", "1"].contains(result)) {
+        return true;
+      } else if (<String>["false", "0"].contains(result)) {
+        return false;
+      } else {
+        //If the value of the given key is null, return the default value
+        return defaultValue;
+      }
+    }
+  }
 }
