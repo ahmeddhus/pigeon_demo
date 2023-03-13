@@ -29,4 +29,4 @@ This project has 2 flavors one without any state management because there's no n
 - [x] Check if code is well documented.
 
 # TL;DR
-You can see the building process by following the pull requests. 
+You can see the building process by following the PRs. 
