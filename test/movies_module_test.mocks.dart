@@ -3,10 +3,9 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i3;
 
-import 'package:instabug_flutter_task/models/movie.dart' as _i3;
-import 'package:instabug_flutter_task/modules/movies_module.dart' as _i2;
+import 'package:instabug_flutter_task/generated/pigeon.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -20,42 +19,20 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-/// A class which mocks [MoviesModule].
+/// A class which mocks [MoviesHostApi].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockMoviesModule extends _i1.Mock implements _i2.MoviesModule {
-  MockMoviesModule() {
+class MockMoviesHostApi extends _i1.Mock implements _i2.MoviesHostApi {
+  MockMoviesHostApi() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  List<_i3.Movie> get movies => (super.noSuchMethod(
-        Invocation.getter(#movies),
-        returnValue: <_i3.Movie>[],
-      ) as List<_i3.Movie>);
-  @override
-  _i4.Future<List<_i3.Movie>> getMovies() => (super.noSuchMethod(
+  _i3.Future<String?> getMovies(String? arg_urlString) => (super.noSuchMethod(
         Invocation.method(
           #getMovies,
-          [],
+          [arg_urlString],
         ),
-        returnValue: _i4.Future<List<_i3.Movie>>.value(<_i3.Movie>[]),
-      ) as _i4.Future<List<_i3.Movie>>);
-  @override
-  _i4.Future<void> onRefresh() => (super.noSuchMethod(
-        Invocation.method(
-          #onRefresh,
-          [],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
-  @override
-  void clearMovies() => super.noSuchMethod(
-        Invocation.method(
-          #clearMovies,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
+        returnValue: _i3.Future<String?>.value(),
+      ) as _i3.Future<String?>);
 }
