@@ -32,10 +32,11 @@ class MoviesModule {
         apiResponse = ApiResponse.fromJsonString(response);
 
         //Check if the response is a list of maps
-        if (apiResponse?.results is List<Map>) {
+        if ((apiResponse?.listResults?.isNotEmpty ?? false)) {
           //Add the movies to the list
-          movies.addAll(
-              (apiResponse?.results as List).map((itemWord) => Movie.fromMap(itemWord)).toList());
+          movies.addAll((apiResponse?.listResults as List)
+              .map((itemWord) => Movie.fromMap(itemWord))
+              .toList());
         }
       }
     } catch (e) {
