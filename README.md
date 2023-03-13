@@ -15,8 +15,8 @@ A new Flutter project that fetch movies list from native side and beck with the 
 - [x] Use Riverpod as State management.
 - [x] Error handling.
 - [x] Unit test.
-- [ ] Look for any enhancement.
-- [ ] Check if code is well documented.
+- [x] Look for any enhancement.
+- [x] Check if code is well documented.
 
 
 ## Getting Started
