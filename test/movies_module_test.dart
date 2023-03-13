@@ -25,10 +25,15 @@ void main() {
 
     test('should fetch and add movies to the list', () async {
       // Mock the response from the API
-      when(mHost.getMovies(any)).thenAnswer((_) async => Mocks.moviesJsonMock);
+      when(mHost.getMovies(any)).thenAnswer((_) async => Mocks.moviesMock);
 
       // Call the method to fetch the movies
       await moviesModule.getMovies();
+
+      // Verify ApiResponse properties.
+      expect(moviesModule.apiResponse?.page, 1);
+      expect(moviesModule.apiResponse?.totalResults, 10000);
+      expect(moviesModule.apiResponse?.totalPages, 500);
 
       // Verify that the movies have been added to the list
       expect(moviesModule.movies.length, 2);
@@ -46,6 +51,22 @@ void main() {
       expect(moviesModule.movies[1].overview, 'overview2');
       expect(moviesModule.movies[1].posterPath, '/poster_path2');
       expect(moviesModule.movies[1].releaseDate, DateTime.parse('2020-02-02'));
+    });
+
+
+    //Test to check if the list is empty after refresh
+    test('should fetch and add no movies to the list after refresh', () async {
+      // Mock the response from the API
+      when(mHost.getMovies(any)).thenAnswer((_) async => Mocks.emptyMoviesListMock);
+
+      await moviesModule.onRefresh();
+
+      // Call the method to fetch the movies
+      await moviesModule.getMovies();
+
+      // Verify that the movies have been added to the list
+      expect(moviesModule.movies.length, 0);
+
     });
   });
 }

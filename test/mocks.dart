@@ -1,5 +1,5 @@
 mixin Mocks {
-  static String moviesJsonMock = '''{
+  static String moviesMock = '''{
     "page": 1,
     "total_results": 10000,
     "total_pages": 500,
@@ -20,6 +20,15 @@ mixin Mocks {
             "overview": "overview2",
             "release_date": "2020-02-02"
         }
+    ]
+}''';
+
+  static String emptyMoviesListMock = '''{
+    "page": 1,
+    "total_results": 10000,
+    "total_pages": 500,
+    "results": [
+
     ]
 }''';
 }
