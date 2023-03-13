@@ -3,15 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:instabug_flutter_task/app.dart';
 
-//Run the app with the riverpod flavor
-//That use the riverpod package for state management
+/// Run the app with the riverpod flavor
+/// That use the riverpod package for state management
 void main({bool useRiverpod = false}) {
-  // This is used to disable the debugPrint() function in release mode.
+  /// This is used to disable the debugPrint() function in release mode.
   if (kReleaseMode) debugPrint = (String? message, {int? wrapWidth}) {};
 
   runApp(
     const ProviderScope(
       child: MyApp(
+        /// This will show the app with the riverpod flavor and display [HomePageRiverpod]
         useRiverpod: true,
       ),
     ),

@@ -14,8 +14,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  //Flag to indicate if the movies are being fetched from the API
-  //to show a progress indicator
+  /// Flag to indicate if the movies are being fetched from the API
+  /// to show a progress indicator
   bool loading = true;
 
   late MoviesModule moviesModule;
@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
 
     moviesModule = MoviesModule();
-    //Fetch movies from the API
+    /// Fetch movies from the API
     _getMovies();
   }
 
@@ -36,8 +36,8 @@ class _HomePageState extends State<HomePage> {
     return AppScaffold(
       onRefresh: _onRefresh,
 
-      //Wrap in stack so that the [RefreshIndicator] working fine
-      //Because the [RefreshIndicator] must wrap the scrollable widget
+      /// Wrap in stack so that the [RefreshIndicator] working fine
+      /// Because the [RefreshIndicator] must wrap the scrollable widget
       child: Stack(
         children: [
           if (isFetchedMoviesEmpty)
@@ -59,20 +59,20 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  //Fetch movies from the API
+  /// Fetch movies from the API
   Future<void> _getMovies() async {
     await moviesModule.getMovies();
     _toggleLoading(on: false);
   }
 
-  //Refresh the movies list
+  /// Refresh the movies list
   Future<void> _onRefresh() async {
     _toggleLoading(on: true);
     await moviesModule.onRefresh();
     _toggleLoading(on: false);
   }
 
-  //Toggle the loading flag and update the UI
+  /// Toggle the loading flag and update the UI
   void _toggleLoading({required bool on}) {
     loading = on;
     setState(() {});
