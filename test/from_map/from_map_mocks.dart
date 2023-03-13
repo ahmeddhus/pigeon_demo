@@ -24,5 +24,8 @@ mixin FromMapMocks{
     "bool5": "0",
     "bool6": "1",
     "bool7": null,
+    "bool8": "2",
+    "bool9": 0,
+    "bool10": 1,
   };
 }
