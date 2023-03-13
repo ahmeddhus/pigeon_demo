@@ -13,10 +13,17 @@ class MoviesModule {
 
   final List<Movie> movies = [];
 
+  static var _host = MoviesHostApi();
+
+  @visibleForTesting
+  void $setHostApi(MoviesHostApi host) {
+    _host = host;
+  }
+
   Future<List<Movie>> getMovies() async {
     try {
       //Invoke the API to fetch movies from the API which is implemented in the native side
-      dynamic response = await MoviesHostApi().getMovies('$moviesApiUrl$apiKey');
+      dynamic response = await _host.getMovies('$moviesApiUrl$apiKey');
 
       //Check if the response is a string
       if (response is String) {
