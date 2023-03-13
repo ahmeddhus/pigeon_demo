@@ -15,7 +15,7 @@ void main() {
   // Initialize the Flutter binding before running the test case
   WidgetsFlutterBinding.ensureInitialized();
 
-  group('MoviesModule', () {
+  group('MoviesModule with valid JSON responses', () {
     final mHost = MockMoviesHostApi();
     final moviesModule = MoviesModule();
 
@@ -23,6 +23,7 @@ void main() {
       moviesModule.$setHostApi(mHost);
     });
 
+    //Test to check if the list is not empty.
     test('should fetch and add movies to the list', () async {
       // Mock the response from the API
       when(mHost.getMovies(any)).thenAnswer((_) async => Mocks.moviesMock);
@@ -63,6 +64,23 @@ void main() {
 
       // Call the method to fetch the movies
       await moviesModule.getMovies();
+
+      // Verify that the movies have been added to the list
+      expect(moviesModule.movies.length, 0);
+
+    });
+
+    //Test to check if the list is empty after refresh
+    test('should fetch and return empty error message', () async {
+      // Mock the response from the API
+      when(mHost.getMovies(any)).thenAnswer((_) async => Mocks.errorResponseMock);
+
+      // Call the method to fetch the movies
+      await moviesModule.getMovies();
+
+      expect(moviesModule.apiResponse?.statusCode, 7);
+      expect(moviesModule.apiResponse?.statusMessage, "Invalid API key: You must be granted a valid key.");
+      expect(moviesModule.apiResponse?.success, false);
 
       // Verify that the movies have been added to the list
       expect(moviesModule.movies.length, 0);
