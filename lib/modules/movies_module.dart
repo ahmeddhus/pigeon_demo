@@ -39,8 +39,10 @@ class MoviesModule {
               .toList());
         }
       }
+    } on ApiResponse catch (apiResponse) {
+      debugPrint('getMovies(): ${apiResponse.innerException} && ${apiResponse.statusMessage}');
     } catch (e) {
-      debugPrint('_getMovies(): $e');
+      debugPrint('getMovies(): $e');
     }
 
     return movies;

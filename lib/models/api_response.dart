@@ -30,6 +30,10 @@ class ApiResponse {
   // The `statusMessage` property is used to store the error message in case of an error.
   final String? statusMessage;
 
+  // The `innerException` property is used to store the inner exception in case of an error.
+  //only used for debugging.
+  final String? innerException;
+
   ApiResponse({
     this.page,
     this.totalPages,
@@ -39,6 +43,7 @@ class ApiResponse {
     this.statusCode,
     this.statusMessage,
     this.success,
+    this.innerException,
   });
 
   // This method is used to parse the Map response from the API.
@@ -69,10 +74,13 @@ class ApiResponse {
       return ApiResponse.fromMap(jsonMap);
     } catch (e) {
       // If there is an error, print it to the console.
-      debugPrint('ApiResponse.fromJsonString: Error parsing JSON: $e');
+      debugPrint('ApiResponse.fromJsonString: $e');
 
       // Return an empty ApiResponse object.
-      return ApiResponse();
+      return ApiResponse(
+        success: false,
+        innerException: 'ApiResponse.fromJsonString: $e',
+      );
     }
   }
 }
