@@ -94,7 +94,7 @@ class FromMap {
   }
 
   //Convert the value of the given key to List<Map<String, dynamic>>
-  List<Map<String, dynamic>> convertToList({required String key}) {
+  List<Map<String, dynamic>>? convertToList({required String key}) {
     dynamic dynamicData = map[key];
 
     //Check if the value is a List
@@ -107,7 +107,7 @@ class FromMap {
       return listOfMaps;
     }
 
-    //If the value is not a List, the same value is returned
-    return dynamicData;
+    //If the value is not a List, return null
+    return null;
   }
 }
