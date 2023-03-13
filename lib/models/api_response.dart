@@ -65,13 +65,17 @@ class ApiResponse {
   }
 
   //Convert from json string to ApiResponse object
-  factory ApiResponse.fromJsonString(String jsonString) {
+  factory ApiResponse.fromJsonString(String? jsonString) {
     // Try to parse the JSON string.
     try {
       // Convert the JSON string to a Map.
-      final Map<String, dynamic> jsonMap = json.decode(jsonString);
+      final Map<String, dynamic> jsonMap = json.decode(jsonString!);
       // Return an ApiResponse object.
       return ApiResponse.fromMap(jsonMap);
+    } on ApiResponse catch (apiResponse) {
+      // If there is an error, print it to the console.
+      debugPrint('ApiResponse.fromJsonString: ${apiResponse.innerException}');
+      return apiResponse;
     } catch (e) {
       // If there is an error, print it to the console.
       debugPrint('ApiResponse.fromJsonString: $e');

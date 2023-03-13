@@ -28,16 +28,13 @@ class MoviesModule {
       dynamic response = await _host.getMovies('$moviesApiUrl$apiKey');
 
       //Check if the response is a string
-      if (response is String) {
-        apiResponse = ApiResponse.fromJsonString(response);
+      apiResponse = ApiResponse.fromJsonString(response);
 
-        //Check if the response is a list of maps
-        if ((apiResponse?.listResults?.isNotEmpty ?? false)) {
-          //Add the movies to the list
-          movies.addAll((apiResponse?.listResults as List)
-              .map((itemWord) => Movie.fromMap(itemWord))
-              .toList());
-        }
+      //Check if the response is a list of maps
+      if ((apiResponse?.listResults?.isNotEmpty ?? false)) {
+        //Add the movies to the list
+        movies.addAll(
+            (apiResponse?.listResults as List).map((itemWord) => Movie.fromMap(itemWord)).toList());
       }
     } on ApiResponse catch (apiResponse) {
       debugPrint('getMovies(): ${apiResponse.innerException} && ${apiResponse.statusMessage}');
