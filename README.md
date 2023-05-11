@@ -1,4 +1,4 @@
-# instabug_flutter_task
+# Pigeon Demo
 
 A new Flutter project that fetch movies list from native side and beck with the results to flutter side.
 
