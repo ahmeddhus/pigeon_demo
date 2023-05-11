@@ -1,6 +1,6 @@
 # Pigeon Demo
 
-A new Flutter project that fetch movies list from native side and beck with the results to flutter side.
+A new Flutter project using Pigeon plugin by fetch movies list from native side and beck with the results to flutter side.
 
 This project has 2 flavors one without any state management because there's no need for it as it's a small project, and one using [Riverpod](https://pub.dev/packages/riverpod) as state management in case you're cerious about how could I handle it using state management.
 
@@ -27,6 +27,8 @@ This project has 2 flavors one without any state management because there's no n
 - [x] Unit test.
 - [x] Look for any enhancement.
 - [x] Check if code is well documented.
+
+Check this [short video](https://youtu.be/rfq-RZ2QC5s?list=PLjxrf2q8roU3N8-rlgg8_jueoNT-85A6_) on Flutter youtube channel.
 
 # TL;DR
 You can see the building process by following the PRs. 
