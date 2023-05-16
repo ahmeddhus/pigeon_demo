@@ -1,5 +1,5 @@
 //TODO move to env file
-const String apiKey = '49c7e595e32c8886ddb7e18304fc1eb0';
+const String apiKey = 'YOUR API KEY';
 
 const String baseUrl = 'https://api.themoviedb.org/3';
 
